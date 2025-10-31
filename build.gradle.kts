@@ -2,7 +2,10 @@ plugins {
     kotlin("jvm") version "1.9.24"
     kotlin("plugin.serialization") version "1.9.24"
     application
+    
 }
+
+
 
 val ktor_version = "2.3.12"
 val exposed_version = "0.50.1"
@@ -13,12 +16,12 @@ version = "0.0.1"
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21)) // Явно JDK 21
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 
 kotlin {
-    jvmToolchain(21) // Kotlin тоже JVM 21
+    jvmToolchain(21)
 }
 
 application {
@@ -28,7 +31,6 @@ application {
 repositories {
     mavenCentral()
 }
-
 dependencies {
     // Ktor Core
     implementation("io.ktor:ktor-server-core-jvm:2.3.12")
