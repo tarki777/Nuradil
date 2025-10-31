@@ -9,7 +9,6 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
 
-// JWT
 const val JWT_SECRET = "your_strong_jwt_secret_key"
 const val JWT_ISSUER = "ktor-student-api"
 const val JWT_AUDIENCE = "student-users"
@@ -28,11 +27,9 @@ fun Application.configureSecurity() {
             validate { credential ->
                 if (credential.payload.audience.contains(JWT_AUDIENCE)) {
                     JWTPrincipal(credential.payload)
-                } else {
-                    null
-                }
+                } else null
             }
-            challenge { defaultScheme, realm ->
+            challenge { _, _ ->
                 call.respond(HttpStatusCode.Unauthorized, ErrorResponse("Требуется токен авторизации"))
             }
         }
