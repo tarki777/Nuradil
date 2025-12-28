@@ -22,6 +22,8 @@ fun Application.module() {
     configureSerialization() 
     configureSecurity()     
     configureErrorHandling()
+    configureSwagger()
+
 
     routing {
         authRouting(userService)

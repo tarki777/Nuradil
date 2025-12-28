@@ -2,6 +2,7 @@
 val ktor_version = "2.3.12"
 val kotlin_version = "1.9.24"
 val exposed_version = "0.50.1"
+val ktor_openapi_version = "0.7.4"
 val logback_version = "1.4.14"
 
 kotlin {
@@ -49,4 +50,7 @@ dependencies {
     // Testing (если нужно)
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+
+    implementation("io.ktor:ktor-server-openapi:$ktor_version")
+    implementation("io.ktor:ktor-server-swagger:$ktor_version")
 }
