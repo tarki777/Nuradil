@@ -1,0 +1,65 @@
+openapi: 3.0.0
+info:
+  title: Student API
+  version: "1.0"
+paths:
+  /auth/register:
+    post:
+      summary: Регистрация пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "201":
+          description: Пользователь создан
+        "409":
+          description: Пользователь уже существует
+  /auth/login:
+    post:
+      summary: Авторизация пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: JWT токен
+        "401":
+          description: Неверные данные
+  /students:
+    get:
+      summary: Список студентов
+      responses:
+        "200":
+          description: Успешный ответ
+    post:
+      summary: Создать студента
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                age:
+                  type: integer
+      responses:
+        "201":
+          description: Студент создан

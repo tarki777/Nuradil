@@ -21,6 +21,10 @@ data class ErrorResponse(val error: String, val details: String? = null)
 @Serializable
 data class MessageResponse(val message: String)
 
+@Serializable
+data class UserRole(val username: String, val role: String)
+
+
 
 object Students : IntIdTable("students") {
     val name = varchar("name", 255)
@@ -31,5 +35,6 @@ object Students : IntIdTable("students") {
 object Users : IntIdTable("users") {
     val username = varchar("username", 255).uniqueIndex()
     val passwordHash = varchar("password_hash", 255) 
+    val role = varchar("role", 20).default("user")
 
 }

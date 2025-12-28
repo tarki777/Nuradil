@@ -5,3 +5,12 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        google()
+    }
+}
+rootProject.name = "ktor"
