@@ -2,7 +2,7 @@ package com.ktor.services
 
 import com.ktor.models.Users
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq 
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.mindrot.jbcrypt.BCrypt
 
@@ -16,12 +16,12 @@ class UserService {
         Users.select { Users.username eq username }.singleOrNull()
     }
 
-    fun registerUser(username: String, passwordHash: String): Boolean = transaction {
+    fun registerUser(username: String, passwordHash: String, role: String = "user"): Boolean = transaction {
         try {
-
             Users.insert {
                 it[Users.username] = username
                 it[Users.passwordHash] = passwordHash
+                it[Users.role] = role
             }
             true
         } catch (e: Exception) {

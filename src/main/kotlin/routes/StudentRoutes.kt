@@ -11,6 +11,10 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
+import io.ktor.server.auth.*
+import io.ktor.server.auth.jwt.*
+
+
 fun Route.studentRouting(studentService: StudentService) {
     
     authenticate("auth-jwt") {
@@ -55,8 +59,14 @@ fun Route.studentRouting(studentService: StudentService) {
                 }
             }
             
-            // DELETE
+            // DELETE only admin
             delete("/{id}") {
+                val role = call.principal<JWTPrincipal>()?.getClaim("role", String::class)
+                if (role != "admin") {
+                    call.respond(HttpStatusCode.Forbidden, ErrorResponse("Недостаточно прав"))
+                    return@delete
+                }
+
                 val id = call.parameters["id"]?.toIntOrNull()
                 
                 if (id == null) {

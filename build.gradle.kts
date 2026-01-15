@@ -1,21 +1,28 @@
-
-val ktor_version = "2.3.12"
-val kotlin_version = "1.9.24"
-val exposed_version = "0.50.1"
-val ktor_openapi_version = "0.7.4"
-val logback_version = "1.4.14"
-
-kotlin {
-    jvmToolchain(21) // Говорим Gradle использовать JDK 21 для компиляции
-}
 plugins {
-    // Жёстко указываем версию Kotlin в блоке plugins
-    kotlin("jvm") version "1.9.24" 
+    kotlin("jvm") version "1.9.24"
     kotlin("plugin.serialization") version "1.9.24"
     application
+    
 }
+
+
+
+val ktor_version = "2.3.12"
+val exposed_version = "0.50.1"
+val logback_version = "1.4.14"
+
 group = "com.ktor"
 version = "0.0.1"
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+kotlin {
+    jvmToolchain(21)
+}
 
 application {
     mainClass.set("com.ktor.ApplicationKt")
@@ -24,33 +31,37 @@ application {
 repositories {
     mavenCentral()
 }
-
 dependencies {
     // Ktor Core
-    implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
-    
-    // JSON Serialization
-    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
-    implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-server-core-jvm:2.3.12")
+    implementation("io.ktor:ktor-server-netty-jvm:2.3.12")
 
-    // --- Database (Exposed + PostgreSQL) ---
-    implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
-    implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
-    implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
-    implementation("org.postgresql:postgresql:42.7.3") 
-    
-    // --- Security ---
-    implementation("io.ktor:ktor-server-auth-jwt:$ktor_version")
-    implementation("org.mindrot:jbcrypt:0.4") // BCrypt
-    
+    // JSON
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.12")
+    implementation("io.ktor:ktor-server-content-negotiation:2.3.12")
+
+    // Database
+    implementation("org.jetbrains.exposed:exposed-core:0.50.1")
+    implementation("org.jetbrains.exposed:exposed-dao:0.50.1")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.50.1")
+    implementation("org.postgresql:postgresql:42.7.3")
+
+    // Security
+    implementation("io.ktor:ktor-server-auth-jwt:2.3.12")
+    implementation("org.mindrot:jbcrypt:0.4")
+
+    // WebSockets
+    implementation("io.ktor:ktor-server-websockets:2.3.12")
+
     // Logging
-    runtimeOnly("ch.qos.logback:logback-classic:$logback_version")
+    runtimeOnly("ch.qos.logback:logback-classic:1.4.14")
 
-    // Testing (если нужно)
-    testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    // Testing
+    testImplementation("io.ktor:ktor-server-tests-jvm:2.3.12")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.24")
 
-    implementation("io.ktor:ktor-server-openapi:$ktor_version")
-    implementation("io.ktor:ktor-server-swagger:$ktor_version")
+    // OpenAPI / Swagger
+    implementation("io.ktor:ktor-server-openapi:2.3.12")
+    implementation("io.ktor:ktor-server-swagger:2.3.12")
+
 }
